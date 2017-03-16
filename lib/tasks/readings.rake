@@ -37,6 +37,7 @@ namespace :readings do
           default_directory: "/Users/work/code/hydro_bot/public"
         }
       }
+
       @browser = Selenium::WebDriver.for :chrome, prefs: prefs
       @browser.get('https://hydroottawa.com/account')
 
