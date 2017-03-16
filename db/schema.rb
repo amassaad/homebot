@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170315191832) do
+ActiveRecord::Schema.define(version: 20170316123456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20170315191832) do
     t.integer  "cost"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "ratetype"
+    t.index ["time"], name: "index_readings_on_time", unique: true, using: :btree
   end
 
 end
