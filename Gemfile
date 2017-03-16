@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 
 gem 'figaro'
-gem 'mechanize'
+gem 'selenium-webdriver'
 gem 'spreadsheet'
 
 group :development, :test do
