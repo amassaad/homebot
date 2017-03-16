@@ -28,6 +28,8 @@ namespace :readings do
   desc "save locally"
 
   task save_file_locally: :environment do
+    Selenium::WebDriver::Chrome.driver_path = File.join('/app/.apt/usr/bin/chrome')
+
     begin
       prefs = {
         download: {
@@ -35,7 +37,6 @@ namespace :readings do
           default_directory: "/Users/work/code/hydro_bot/public"
         }
       }
-
       @browser = Selenium::WebDriver.for :chrome, prefs: prefs
       @browser.get('https://hydroottawa.com/account')
 
