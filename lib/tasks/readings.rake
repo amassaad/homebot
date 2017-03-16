@@ -28,7 +28,7 @@ namespace :readings do
   desc "save locally"
 
   task save_file_locally: :environment do
-    Selenium::WebDriver::Chrome.driver_path = File.join('/app/.apt/usr/bin/chrome')
+    # Selenium::WebDriver::Chrome.driver_path = File.join('/app/.apt/usr/bin/chrome')
 
     begin
       prefs = {
