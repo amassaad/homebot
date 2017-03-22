@@ -28,17 +28,26 @@ namespace :readings do
   desc "save locally"
 
   task save_file_locally: :environment do
-    Selenium::WebDriver::Chrome.driver_path = File.join('/app/.apt/usr/bin/google-chrome-unstable')
+    # Selenium::WebDriver::Chrome.driver_path = File.join('/app/.apt/usr/bin/google-chrome-unstable')
 
     begin
-      prefs = {
-        download: {
-          prompt_for_download: false,
-          default_directory: "/Users/work/code/hydro_bot/public"
-        }
-      }
+      # prefs = {
+      #   download: {
+      #     prompt_for_download: false,
+      #     default_directory: "/Users/work/code/hydro_bot/public"
+      #   }
+      # }
+      #
+      #
+      profile = Selenium::WebDriver::Firefox::Profile.new
+      profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
+      profile['browser.download.folderList'] = 2
+      profile['browser.helperApps.neverAsk.saveToDisk'] = "application/vnd.ms-excel"
+      profile['pdfjs.disabled'] = true
 
-      @browser = Selenium::WebDriver.for :chrome, prefs: prefs
+      @browser = Selenium::WebDriver.for :firefox, profile: profile
+
+      # @browser = Selenium::WebDriver.for :chrome, prefs: prefs
       @browser.get('https://hydroottawa.com/account')
 
       wait = Selenium::WebDriver::Wait.new(:timeout => 5)
