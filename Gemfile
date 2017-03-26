@@ -32,7 +32,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'figaro'
 gem 'selenium-webdriver'
 gem 'spreadsheet'
-gem 'chromedriver-helper'
 gem 'carrierwave'
 gem 'fog'
 

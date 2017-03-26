@@ -45,8 +45,6 @@ namespace :readings do
     end
   end
 
-
-
   desc "save locally"
 
   task save_file: :environment do
