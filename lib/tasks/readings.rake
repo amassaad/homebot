@@ -1,6 +1,23 @@
 namespace :readings do
 
-  desc "Import readings to the db from an excel file of hourly readings"
+  desc "upload to s3 - run locally, or wherever firefox/chrome is sold"
+
+  task upload: :environment do
+    file = File.open("public/hourly.xls")
+    uploader = HydroUploader.new
+    uploader.store!(file)
+  end
+
+  desc "download from s3 - saves to the application root"
+
+  task download: :environment do
+    require 'open-uri'
+    download = open('https://s3-us-west-2.amazonaws.com/hydro-bot/hydro_uploads/hourly.xls')
+    Rails.env.production? ? IO.copy_stream(download, '/app/hourly.xls') : IO.copy_stream(download, '/Users/work/code/hydro_bot/hourly.xls')
+  end
+
+  desc "Import readings to the db from an excel file of hourly readings located in the applicaiton root"
+
   task import_from_file: :environment do
     if Rails.env.production?
       book = Spreadsheet.open '/app/hourly.xls'
@@ -28,25 +45,13 @@ namespace :readings do
     end
   end
 
-  desc "upload to s3"
-  task upload: :environment do
-    file = File.open("public/hourly.xls")
-    uploader = HydroUploader.new
-    uploader.store!(file)
-  end
 
-  desc "download from s3"
-  task download: :environment do
-    require 'open-uri'
-    download = open('https://s3-us-west-2.amazonaws.com/hydro-bot/hydro_uploads/hourly.xls')
-    Rails.env.production? ? IO.copy_stream(download, '/app/hourly.xls') : IO.copy_stream(download, '/Users/work/code/hydro_bot/hourly.xls')
-  end
 
   desc "save locally"
-  task save_file: :environment do
-    # Selenium::WebDriver::Chrome.driver_path = File.join('/app/.apt/usr/bin/google-chrome-unstable')
 
+  task save_file: :environment do
     begin
+      #### Chrome settings ####
       # prefs = {
       #   download: {
       #     prompt_for_download: false,
@@ -54,7 +59,7 @@ namespace :readings do
       #   }
       # }
       #
-      #
+
       profile = Selenium::WebDriver::Firefox::Profile.new
       profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
       profile['browser.download.folderList'] = 2
@@ -141,13 +146,3 @@ namespace :readings do
     (cost * 100).to_i
   end
 end
-
-# Time Period
-# Rate Type
-# Consumption
-# Cost
-
-# Mar 14, 2017 01:00 AM - 02:00 AM
-# Off-Peak
-# 0.43kWh
-# 0.04

@@ -1,10 +1,5 @@
 class HydroUploader < CarrierWave::Uploader::Base
-
-  # if Rails.env.production?
-    storage :fog
-  # elsif Rails.env.development?
-    # storage :file
-  # end
+  storage :fog
 
   def store_dir
     "hydro_uploads"
