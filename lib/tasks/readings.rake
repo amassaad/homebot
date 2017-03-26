@@ -1,9 +1,12 @@
 namespace :readings do
-  desc "Import readings to the db from an excel file of hourly readings"
 
+  desc "Import readings to the db from an excel file of hourly readings"
   task import_from_file: :environment do
-    Spreadsheet.client_encoding = 'UTF-8'
-    book = Spreadsheet.open 'public/demo-hourly.xls'
+    if Rails.env.production?
+      book = Spreadsheet.open '/app/hourly.xls'
+    else
+      book = Spreadsheet.open 'public/hourly-default.xls'
+    end
     sheet1 = book.worksheets[0]
     sheet1.each 4 do |row|
       unless row[0].nil?
@@ -25,9 +28,22 @@ namespace :readings do
     end
   end
 
-  desc "save locally"
+  desc "upload to s3"
+  task upload: :environment do
+    file = File.open("public/hourly.xls")
+    uploader = HydroUploader.new
+    uploader.store!(file)
+  end
 
-  task save_file_locally: :environment do
+  desc "download from s3"
+  task download: :environment do
+    require 'open-uri'
+    download = open('https://s3-us-west-2.amazonaws.com/hydro-bot/hydro_uploads/hourly.xls')
+    Rails.env.production? ? IO.copy_stream(download, '/app/hourly.xls') : IO.copy_stream(download, '/Users/work/code/hydro_bot/hourly.xls')
+  end
+
+  desc "save locally"
+  task save_file: :environment do
     # Selenium::WebDriver::Chrome.driver_path = File.join('/app/.apt/usr/bin/google-chrome-unstable')
 
     begin
@@ -108,6 +124,7 @@ namespace :readings do
       end
 
       @browser.quit
+
     rescue Selenium::WebDriver::Error::TimeOutError => e
       if e.message == 'timed out after 5 seconds'
         @browser.quit
