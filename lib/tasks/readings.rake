@@ -1,9 +1,29 @@
 namespace :readings do
-  desc "Import readings to the db from an excel file of hourly readings"
+
+  desc "upload to s3 - run locally, or wherever firefox/chrome is sold"
+
+  task upload: :environment do
+    file = File.open("public/hourly.xls")
+    uploader = HydroUploader.new
+    uploader.store!(file)
+  end
+
+  desc "download from s3 - saves to the application root"
+
+  task download: :environment do
+    require 'open-uri'
+    download = open('https://s3-us-west-2.amazonaws.com/hydro-bot/hydro_uploads/hourly.xls')
+    Rails.env.production? ? IO.copy_stream(download, '/app/hourly.xls') : IO.copy_stream(download, '/Users/work/code/hydro_bot/hourly.xls')
+  end
+
+  desc "Import readings to the db from an excel file of hourly readings located in the applicaiton root"
 
   task import_from_file: :environment do
-    Spreadsheet.client_encoding = 'UTF-8'
-    book = Spreadsheet.open 'public/demo-hourly.xls'
+    if Rails.env.production?
+      book = Spreadsheet.open '/app/hourly.xls'
+    else
+      book = Spreadsheet.open 'public/hourly-default.xls'
+    end
     sheet1 = book.worksheets[0]
     sheet1.each 4 do |row|
       unless row[0].nil?
@@ -25,20 +45,30 @@ namespace :readings do
     end
   end
 
+
+
   desc "save locally"
 
-  task save_file_locally: :environment do
-    Selenium::WebDriver::Chrome.driver_path = File.join('/app/.apt/usr/bin/google-chrome')
-
+  task save_file: :environment do
     begin
-      prefs = {
-        download: {
-          prompt_for_download: false,
-          default_directory: "/Users/work/code/hydro_bot/public"
-        }
-      }
+      #### Chrome settings ####
+      # prefs = {
+      #   download: {
+      #     prompt_for_download: false,
+      #     default_directory: "/Users/work/code/hydro_bot/public"
+      #   }
+      # }
+      #
 
-      @browser = Selenium::WebDriver.for :chrome, prefs: prefs
+      profile = Selenium::WebDriver::Firefox::Profile.new
+      profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
+      profile['browser.download.folderList'] = 2
+      profile['browser.helperApps.neverAsk.saveToDisk'] = "application/vnd.ms-excel"
+      profile['pdfjs.disabled'] = true
+
+      @browser = Selenium::WebDriver.for :firefox, profile: profile
+
+      # @browser = Selenium::WebDriver.for :chrome, prefs: prefs
       @browser.get('https://hydroottawa.com/account')
 
       wait = Selenium::WebDriver::Wait.new(:timeout => 5)
@@ -99,6 +129,7 @@ namespace :readings do
       end
 
       @browser.quit
+
     rescue Selenium::WebDriver::Error::TimeOutError => e
       if e.message == 'timed out after 5 seconds'
         @browser.quit
@@ -115,13 +146,3 @@ namespace :readings do
     (cost * 100).to_i
   end
 end
-
-# Time Period
-# Rate Type
-# Consumption
-# Cost
-
-# Mar 14, 2017 01:00 AM - 02:00 AM
-# Off-Peak
-# 0.43kWh
-# 0.04
