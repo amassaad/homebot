@@ -1,0 +1,2 @@
+#!/bin/bash
+cd /Users/work/code/hydro_bot && bundle exec rake readings:save_file readings:upload

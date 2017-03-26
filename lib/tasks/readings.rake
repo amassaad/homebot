@@ -5,7 +5,10 @@ namespace :readings do
   task upload: :environment do
     file = File.open("public/hourly.xls")
     uploader = HydroUploader.new
+    puts "Uploading . . . "
     uploader.store!(file)
+    puts "Deleting the file now . . . "
+    File.delete(file)
   end
 
   desc "download from s3 - saves to the application root"
@@ -59,7 +62,7 @@ namespace :readings do
       #
 
       profile = Selenium::WebDriver::Firefox::Profile.new
-      profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
+      profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public" 
       profile['browser.download.folderList'] = 2
       profile['browser.helperApps.neverAsk.saveToDisk'] = "application/vnd.ms-excel"
       profile['pdfjs.disabled'] = true
