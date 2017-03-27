@@ -1,5 +1,13 @@
 namespace :readings do
 
+  desc "emit hydro usage from 24 hours ago"
+
+  task emit: :environment do
+    @reading = Reading.where(time: (Time.now - 24.hours)..(Time.now - 23.hours)).first
+    StatsD.gauge('york.hourly.cost', @reading.cost, sample_rate: 1.0)
+    StatsD.gauge('york.hourly.amount', @reading.amount, sample_rate: 1.0)
+  end
+
   desc "upload to s3 - run locally, or wherever firefox/chrome is sold"
 
   task upload: :environment do
@@ -62,7 +70,7 @@ namespace :readings do
       #
 
       profile = Selenium::WebDriver::Firefox::Profile.new
-      profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public" 
+      profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
       profile['browser.download.folderList'] = 2
       profile['browser.helperApps.neverAsk.saveToDisk'] = "application/vnd.ms-excel"
       profile['pdfjs.disabled'] = true
