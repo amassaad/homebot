@@ -6,7 +6,7 @@ namespace :readings do
     @reading = Reading.where(time: (Time.now - 24.hours)..(Time.now - 23.hours)).first
     StatsD.gauge('york.hourly.cost', @reading.cost)
     StatsD.gauge('york.hourly.amount', @reading.amount)
-    sleep(15)
+    sleep(60)
   end
 
   desc "upload to s3 - run locally, or wherever firefox/chrome is sold"
