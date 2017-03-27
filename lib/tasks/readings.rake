@@ -3,9 +3,9 @@ namespace :readings do
   desc "emit hydro usage from 24 hours ago"
 
   task emit: :environment do
-    @reading = Reading.where(time: (Time.now - 24.hours)..(Time.now - 23.hours)).first
-    StatsD.gauge('york.hourly.cost', @reading.cost, sample_rate: 1.0)
-    StatsD.gauge('york.hourly.amount', @reading.amount, sample_rate: 1.0)
+    @reading = Reading.last #where(time: (Time.now - 24.hours)..(Time.now - 23.hours)).first
+    StatsD.gauge('york.hourly.cost', @reading.cost)
+    StatsD.gauge('york.hourly.amount', @reading.amount)
     sleep(5)
   end
 
