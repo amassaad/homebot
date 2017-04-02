@@ -6,6 +6,7 @@ namespace :readings do
     return unless @reading = Reading.where(time: (Time.now - 48.hours)..(Time.now - 47.hours)).first
     StatsD.gauge('york.hourly.cost', @reading.cost)
     StatsD.gauge('york.hourly.amount', @reading.amount)
+    StatsD.gauge('york.datalag', Time.now - @reading.time)
     sleep(60)
   end
 
