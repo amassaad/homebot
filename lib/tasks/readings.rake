@@ -105,17 +105,32 @@ namespace :readings do
 
       form.find_element(:id, 'loginradius-raas-submit-Login').click
 
+      # #Start fix
+      begin
+        wait25.until { @browser.find_element(id: "foo") }
+      rescue Selenium::WebDriver::Error::TimeOutError => e
+      end
+      @browser.execute_script("SSO.login('BILLING');")
+
+
       usage_link = wait25.until {
-        element = @browser.find_element(:id, 'ContentPlaceHolder1_lnkConsumptionHistory')
+        element = @browser.find_element(xpath: "//img[@src='https://static.hydroottawa.com//images/account/landing/Bill.svg']")
         element if element.displayed?
       }
-      puts "Test Passed: usage link found" if usage_link.displayed?
-      @browser.find_element(:id, 'ContentPlaceHolder1_lnkConsumptionHistory').click
 
-      @browser.get('https://secure.hydroottawa.com/Usage/Secure/TOU/Hourly.aspx')
+      # @browser.find_element(xpath: "//img[@src='https://static.hydroottawa.com//images/account/landing/Bill.svg']").click
+      puts "Test Passed: billing link found" 
+
+      begin
+        wait25.until { @browser.find_element(id: "foo") }
+      rescue Selenium::WebDriver::Error::TimeOutError => e
+      end
+      
+      #possibly programatically click
+      @browser.get('https://secure.hydroottawa.com/Usage/Secure/TOU/DownloadMyData.aspx')
 
       usage_file = wait25.until {
-        element = @browser.find_element(:id, 'ContentPlaceHolder1_TabHeader2_EmailAndPrint1_imgExcel')
+        element = @browser.find_element(:id, 'ContentPlaceHolder1_mainContent_imgExcel')
         element if element.displayed?
       }
       puts "Test Passed: usage file found" if usage_file.displayed?
