@@ -1,7 +1,15 @@
 namespace :readings do
 
-  desc "upload to s3 - run locally, or wherever firefox/chrome is sold"
+  desc "emit hydro usage from 24 hours ago"
+  task emit: :environment do
+    return unless @reading = Reading.where(time: (Time.now - 48.hours)..(Time.now - 47.hours)).first
+    StatsD.gauge('york.hourly.cost', @reading.cost)
+    StatsD.gauge('york.hourly.amount', @reading.amount)
+    StatsD.gauge('york.datalag', (Time.now - Reading.last.time) / 3600)
+    sleep(60)
+  end
 
+  desc "upload to s3 - run locally, or wherever firefox/chrome is sold"
   task upload: :environment do
     file = File.open("public/hourly.xls")
     uploader = HydroUploader.new
@@ -12,7 +20,6 @@ namespace :readings do
   end
 
   desc "download from s3 - saves to the application root"
-
   task download: :environment do
     require 'open-uri'
     download = open('https://s3-us-west-2.amazonaws.com/hydro-bot/hydro_uploads/hourly.xls')
@@ -20,7 +27,6 @@ namespace :readings do
   end
 
   desc "Import readings to the db from an excel file of hourly readings located in the applicaiton root"
-
   task import_from_file: :environment do
     if Rails.env.production?
       book = Spreadsheet.open '/app/hourly.xls'
@@ -49,7 +55,6 @@ namespace :readings do
   end
 
   desc "save locally"
-
   task save_file: :environment do
     begin
       #### Chrome settings ####
@@ -62,7 +67,7 @@ namespace :readings do
       #
 
       profile = Selenium::WebDriver::Firefox::Profile.new
-      profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public" 
+      profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
       profile['browser.download.folderList'] = 2
       profile['browser.helperApps.neverAsk.saveToDisk'] = "application/vnd.ms-excel"
       profile['pdfjs.disabled'] = true

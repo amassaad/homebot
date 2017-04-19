@@ -1,0 +1,1 @@
+StatsD.prefix = 'hydrobot.ottawa'
