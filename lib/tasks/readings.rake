@@ -2,7 +2,7 @@ namespace :readings do
 
   desc "emit hydro usage from 24 hours ago"
   task emit: :environment do
-    return unless @reading = Reading.where(time: (Time.now - 48.hours)..(Time.now - 47.hours)).first
+    @reading = Reading.where(time: (Time.now - 24.hours)..(Time.now - 23.hours)).first
     StatsD.gauge('york.hourly.cost', @reading.cost)
     StatsD.gauge('york.hourly.amount', @reading.amount)
     StatsD.gauge('york.datalag', (Time.now - Reading.last.time) / 3600)
