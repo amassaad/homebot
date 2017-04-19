@@ -31,7 +31,8 @@ namespace :readings do
     if Rails.env.production?
       book = Spreadsheet.open '/app/hourly.xls'
     else
-      book = Spreadsheet.open 'public/hourly-default.xls'
+      # book = Spreadsheet.open 'public/hourly-default.xls'
+      book = Spreadsheet.open 'hourly.xls'
     end
     sheet1 = book.worksheets[0]
     sheet1.each 4 do |row|
