@@ -2,7 +2,7 @@ namespace :readings do
 
   desc "emit hydro usage from 24 hours ago"
   task emit: :environment do
-    @reading = Reading.where(time: (Time.now - 24.hours)..(Time.now - 23.hours)).first
+    @reading = Reading.where(time: (Time.now - 48.hours)..(Time.now - 47.hours)).first
     StatsD.gauge('york.hourly.cost', @reading.cost)
     StatsD.gauge('york.hourly.amount', @reading.amount)
     StatsD.gauge('york.datalag', (Time.now - Reading.last.time) / 3600)
@@ -31,8 +31,8 @@ namespace :readings do
     if Rails.env.production?
       book = Spreadsheet.open '/app/hourly.xls'
     else
-      # book = Spreadsheet.open 'public/hourly-default.xls'
-      book = Spreadsheet.open 'hourly.xls'
+      book = Spreadsheet.open 'public/hourly.xls'
+      # book = Spreadsheet.open 'hourly.xls'
     end
     sheet1 = book.worksheets[0]
     sheet1.each 4 do |row|
