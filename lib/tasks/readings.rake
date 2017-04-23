@@ -2,7 +2,7 @@ namespace :readings do
 
   desc "emit hydro usage from 24 hours ago"
   task emit: :environment do
-    next unless @reading = Reading.where(time: (Time.now - 24.hours)..(Time.now - 23.hours)).first
+    next unless @reading = Reading.where(time: (Time.now - 48.hours)..(Time.now - 47.hours)).first
     StatsD.gauge('york.hourly.cost', @reading.cost)
     StatsD.gauge('york.hourly.amount', @reading.amount)
     StatsD.gauge('york.datalag', (Time.now - Reading.last.time) / 3600)
@@ -125,13 +125,13 @@ namespace :readings do
       }
 
       # @browser.find_element(xpath: "//img[@src='https://static.hydroottawa.com//images/account/landing/Bill.svg']").click
-      puts "Test Passed: billing link found" 
+      puts "Test Passed: billing link found"
 
       begin
         wait25.until { @browser.find_element(id: "foo") }
       rescue Selenium::WebDriver::Error::TimeOutError => e
       end
-      
+
       #possibly programatically click
       @browser.get('https://secure.hydroottawa.com/Usage/Secure/TOU/DownloadMyData.aspx')
 
