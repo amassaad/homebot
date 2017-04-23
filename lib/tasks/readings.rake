@@ -11,7 +11,7 @@ namespace :readings do
 
   desc "upload to s3 - run locally, or wherever firefox/chrome is sold"
   task upload: :environment do
-    file = File.open("public/hourly.xls")
+    next unless file = File.open("public/hourly.xls")
     uploader = HydroUploader.new
     puts "Uploading . . . "
     uploader.store!(file)
