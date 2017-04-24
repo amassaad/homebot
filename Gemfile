@@ -36,6 +36,7 @@ gem 'carrierwave'
 gem 'fog'
 gem 'bugsnag'
 gem 'statsd-instrument'
+gem 'newrelic_rpm'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
