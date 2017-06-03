@@ -35,11 +35,15 @@ namespace :readings do
       # book = Spreadsheet.open 'hourly.xls'
     end
     sheet1 = book.worksheets[0]
+    date = sheet1.row(1)[0].to_s.gsub("Hourly Usage for ", '')
+    puts date
+    puts sheet1.row(4)
     sheet1.each 4 do |row|
       unless row[0].nil?
         puts row unless Rails.env.production?
+        time = row[0]
 
-        r = Reading.new(time:     row[0],
+        r = Reading.new(time:     date + ' ' + row[0],
                         ratetype: row[1].to_s,
                         amount:   amount_format(row[2]),
                         cost:     cost_format(row[3]))
@@ -111,7 +115,6 @@ namespace :readings do
 
       form.find_element(:id, 'loginradius-raas-submit-Login').click
 
-      # #Start fix
       begin
         wait25.until { @browser.find_element(id: "foo") }
       rescue Selenium::WebDriver::Error::TimeOutError => e
@@ -132,7 +135,6 @@ namespace :readings do
       rescue Selenium::WebDriver::Error::TimeOutError => e
       end
 
-      #possibly programatically click
       @browser.get('https://secure.hydroottawa.com/Usage/Secure/TOU/DownloadMyData.aspx')
 
       usage_file = wait25.until {
