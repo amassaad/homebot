@@ -1,0 +1,9 @@
+machine:
+  ruby:
+    version: 2.4.1
+  hosts:
+    smiley.railgun: 127.0.0.1
+
+dependencies:
+  bundler:
+    without: [development, production]
