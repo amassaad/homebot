@@ -64,26 +64,32 @@ namespace :readings do
     StatsD.measure('york.app.save_job') do
       begin
         #### Chrome settings ####
-        # prefs = {
-        #   download: {
-        #     prompt_for_download: false,
-        #     default_directory: "/Users/work/code/hydro_bot/public"
-        #   }
-        # }
-        #
+        prefs = {
+          download: {
+            prompt_for_download: false,
+            default_directory: "/Users/work/code/hydro_bot/public"
+          }
+        }
 
-        profile = Selenium::WebDriver::Firefox::Profile.new
-        profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
-        profile['browser.download.folderList'] = 2
-        profile['browser.helperApps.neverAsk.saveToDisk'] = "application/vnd.ms-excel"
-        profile['pdfjs.disabled'] = true
 
-        @browser = Selenium::WebDriver.for :firefox, profile: profile
+        # profile = Selenium::WebDriver::Firefox::Profile.new
+        # profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
+        # profile['browser.download.folderList'] = 2
+        # profile['browser.helperApps.neverAsk.saveToDisk'] = "application/vnd.ms-excel"
+        # profile['pdfjs.disabled'] = true
+
+        # @browser = Selenium::WebDriver.for :firefox, profile: profile
+        @browser = Selenium::WebDriver.for :chrome, profile: prefs, switches: %w[--incognito
+                                              --ignore-certificate-errors
+                                              --disable-popup-blocking
+                                              --disable-translate
+                                              --disable-default-apps
+                                              --no-first-run]
 
         # @browser = Selenium::WebDriver.for :chrome, prefs: prefs
         @browser.get('https://hydroottawa.com/account')
 
-        wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 15)
         wait25 = Selenium::WebDriver::Wait.new(:timeout => 25)
 
         login_modal = wait.until {
@@ -102,7 +108,7 @@ namespace :readings do
         puts "Test Passed: Email element found" if email_element.displayed?
 
         password_element = wait.until {
-          element = @browser.find_element(:name, 'password')
+          element = @browser.find_element(:id, 'loginradius-raas-login-password')
           element if element.displayed?
         }
         password_element.send_keys(ENV['HYDRO_PASSWORD'])
