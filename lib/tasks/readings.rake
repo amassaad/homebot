@@ -72,6 +72,8 @@ namespace :readings do
         }
         chromedriver_path = ENV.fetch('GOOGLE_CHROME_SHIM', nil)
         Selenium::WebDriver::Chrome.driver_path = chromedriver_path
+        chromedriver_bin = ENV.fetch('GOOGLE_CHROME_BIN', nil)
+        Selenium::WebDriver::Chrome.path = chromedriver_bin
 
         # profile = Selenium::WebDriver::Firefox::Profile.new
         # profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
