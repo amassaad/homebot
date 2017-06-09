@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  time: 2017-03-15 15:18:32
+  time: 2016-03-15 15:18:32
   amount: 1
   cost: 1
 
 two:
-  time: 2017-03-15 15:18:32
+  time: 2016-03-15 11:18:32
   amount: 1
   cost: 1
