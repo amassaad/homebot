@@ -70,10 +70,8 @@ namespace :readings do
             default_directory: "/Users/work/code/hydro_bot/public"
           }
         }
-        chromedriver_path = ENV.fetch('GOOGLE_CHROME_SHIM', nil)
-        Selenium::WebDriver::Chrome.driver_path = chromedriver_path
-        chromedriver_bin = ENV.fetch('GOOGLE_CHROME_BIN', nil)
-        Selenium::WebDriver::Chrome.path = chromedriver_bin
+        chrome_bin = ENV.fetch('GOOGLE_CHROME_SHIM', nil)
+        chrome_opts = chrome_bin ? { "chromeOptions" => { "binary" => chrome_bin } } : {}
 
         # profile = Selenium::WebDriver::Firefox::Profile.new
         # profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
@@ -87,7 +85,8 @@ namespace :readings do
                                               --disable-popup-blocking
                                               --disable-translate
                                               --disable-default-apps
-                                              --no-first-run]
+                                              --no-first-run],
+                                              desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(chrome_opts)
 
         # @browser = Selenium::WebDriver.for :chrome, prefs: prefs
         @browser.get('https://hydroottawa.com/account')
