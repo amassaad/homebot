@@ -29,7 +29,7 @@ namespace :readings do
   desc "Import readings to the db from an excel file of hourly readings located in the applicaiton root"
   task import_from_file: :environment do
     if Rails.env.production?
-      book = Spreadsheet.open '/app/hourly.xls'
+      book = Spreadsheet.open '/app/app/hourly.xls'
     else
       book = Spreadsheet.open 'public/hourly.xls'
       # book = Spreadsheet.open 'hourly.xls'
@@ -63,7 +63,7 @@ namespace :readings do
     StatsD.measure('york.app.save_job') do
       begin
         if Rails.env.production?
-          download_dir = '/app/'
+          download_dir = '/app/app'
         else
           download_dir = '/Users/work/code/hydro_bot/public'
         end
