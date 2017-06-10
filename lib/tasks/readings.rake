@@ -70,7 +70,10 @@ namespace :readings do
             default_directory: "/Users/work/code/hydro_bot/public"
           }
         }
-        chrome_bin = ENV.fetch('GOOGLE_CHROME_BIN', nil)
+        if Rails.env.production?
+          chrome_bin = ENV.fetch('GOOGLE_CHROME_BIN', nil)
+        end
+
         chrome_opts = chrome_bin ? { "chromeOptions" => { "binary" => chrome_bin } } : {}
 
         # profile = Selenium::WebDriver::Firefox::Profile.new
@@ -91,8 +94,8 @@ namespace :readings do
         # @browser = Selenium::WebDriver.for :chrome, prefs: prefs
         @browser.get('https://hydroottawa.com/account')
 
-        wait = Selenium::WebDriver::Wait.new(:timeout => 15)
-        wait25 = Selenium::WebDriver::Wait.new(:timeout => 25)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 45)
+        wait25 = Selenium::WebDriver::Wait.new(:timeout => 55)
 
         login_modal = wait.until {
           element = @browser.find_element(:id, 'btnLRLogin')
