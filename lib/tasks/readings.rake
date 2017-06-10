@@ -180,6 +180,7 @@ namespace :readings do
         end
       end
     end
+    sleep 60
   end
 
   def amount_format(amt)
