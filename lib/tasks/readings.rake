@@ -6,7 +6,7 @@ namespace :readings do
     StatsD.gauge('york.hourly.cost', @reading.cost)
     StatsD.gauge('york.hourly.amount', @reading.amount)
     StatsD.gauge('york.datalag', (Time.now - Reading.last.time) / 3600)
-    sleep(60)
+    sleep(25)
   end
 
   desc "upload to s3 - run locally, or wherever firefox/chrome is sold"
@@ -170,7 +170,7 @@ namespace :readings do
         end
       end
     end
-    sleep 60
+    sleep(25)
   end
 
   def amount_format(amt)
