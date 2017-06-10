@@ -63,26 +63,33 @@ namespace :readings do
   task save_file: :environment do
     StatsD.measure('york.app.save_job') do
       begin
+        if Rails.env.production?
+          download_dir = '/app/'
+        else
+          download_dir = '/Users/work/code/hydro_bot/public'
+        end
         #### Chrome settings ####
         prefs = {
           download: {
             prompt_for_download: false,
-            default_directory: "/Users/work/code/hydro_bot/public"
+            default_directory: download_dir
           }
         }
         if Rails.env.production?
           chrome_bin = ENV.fetch('GOOGLE_CHROME_BIN', nil)
         end
-
         chrome_opts = chrome_bin ? { "chromeOptions" => { "binary" => chrome_bin } } : {}
 
+        # Firefox settings
+        #
         # profile = Selenium::WebDriver::Firefox::Profile.new
-        # profile['browser.download.dir'] = "/Users/work/code/hydro_bot/public"
+        # profile['browser.download.dir'] = download_dir
         # profile['browser.download.folderList'] = 2
         # profile['browser.helperApps.neverAsk.saveToDisk'] = "application/vnd.ms-excel"
         # profile['pdfjs.disabled'] = true
-
         # @browser = Selenium::WebDriver.for :firefox, profile: profile
+        #
+
         @browser = Selenium::WebDriver.for :chrome, profile: prefs, switches: %w[--incognito
                                               --ignore-certificate-errors
                                               --disable-popup-blocking
@@ -95,8 +102,8 @@ namespace :readings do
 
         @browser.get('https://hydroottawa.com/account')
 
-        wait = Selenium::WebDriver::Wait.new(:timeout => 15)
-        wait25 = Selenium::WebDriver::Wait.new(:timeout => 25)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 25)
+        wait55 = Selenium::WebDriver::Wait.new(:timeout => 55)
 
         login_modal = wait.until {
           element = @browser.find_element(:id, 'btnLRLogin')
@@ -129,13 +136,13 @@ namespace :readings do
         form.find_element(:id, 'loginradius-raas-submit-Login').click
 
         begin
-          wait25.until { @browser.find_element(id: "foo") }
+          wait55.until { @browser.find_element(id: "foo") }
         rescue Selenium::WebDriver::Error::TimeOutError => e
         end
         @browser.execute_script("SSO.login('BILLING');")
 
 
-        usage_link = wait25.until {
+        usage_link = wait55.until {
           element = @browser.find_element(xpath: "//img[@src='https://static.hydroottawa.com//images/account/landing/Bill.svg']")
           element if element.displayed?
         }
@@ -143,13 +150,13 @@ namespace :readings do
         puts "Test Passed: billing link found"
 
         begin
-          wait25.until { @browser.find_element(id: "foo") }
+          wait55.until { @browser.find_element(id: "foo") }
         rescue Selenium::WebDriver::Error::TimeOutError => e
         end
 
         @browser.get('https://secure.hydroottawa.com/Usage/Secure/TOU/DownloadMyData.aspx')
 
-        usage_file = wait25.until {
+        usage_file = wait55.until {
           element = @browser.find_element(:id, 'ContentPlaceHolder1_mainContent_imgExcel')
           element if element.displayed?
         }
@@ -157,7 +164,7 @@ namespace :readings do
         usage_file.click
 
         begin
-          wait25.until { @browser.find_element(id: "foo") }
+          wait55.until { @browser.find_element(id: "foo") }
         rescue Selenium::WebDriver::Error::TimeOutError => e
           if e.message == 'timed out after 25 seconds (no such element: Unable to locate element: {"method":"id","selector":"foo"}'
             next
