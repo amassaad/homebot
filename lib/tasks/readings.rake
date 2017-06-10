@@ -101,10 +101,10 @@ namespace :readings do
 
         @browser.get('https://hydroottawa.com/account')
 
-        wait = Selenium::WebDriver::Wait.new(:timeout => 25)
+        wait25 = Selenium::WebDriver::Wait.new(:timeout => 25)
         wait55 = Selenium::WebDriver::Wait.new(:timeout => 55)
 
-        login_modal = wait.until {
+        login_modal = wait25.until {
           element = @browser.find_element(:id, 'btnLRLogin')
           element if element.displayed?
         }
@@ -112,21 +112,21 @@ namespace :readings do
 
         login_modal.click
 
-        email_element = wait.until {
+        email_element = wait25.until {
           element = @browser.find_element(:name, 'emailid')
           element if element.displayed?
         }
         email_element.send_keys(ENV['HYDRO_EMAIL'])
         puts "Test Passed: Email element found" if email_element.displayed?
 
-        password_element = wait.until {
+        password_element = wait25.until {
           element = @browser.find_element(:id, 'loginradius-raas-login-password')
           element if element.displayed?
         }
         password_element.send_keys(ENV['HYDRO_PASSWORD'])
         puts "Test Passed: password element found" if password_element.displayed?
 
-        form = wait.until {
+        form = wait25.until {
           element = @browser.find_element(:name, "loginradius-raas-login")
           element if element.displayed?
         }
@@ -165,7 +165,7 @@ namespace :readings do
         begin
           wait55.until { @browser.find_element(id: "foo") }
         rescue Selenium::WebDriver::Error::TimeOutError => e
-          if e.message == 'timed out after 25 seconds (no such element: Unable to locate element: {"method":"id","selector":"foo"}'
+          if e.message == 'timed out after 55 seconds (no such element: Unable to locate element: {"method":"id","selector":"foo"}'
             next
           end
         end
@@ -173,7 +173,7 @@ namespace :readings do
         @browser.quit
 
       rescue Selenium::WebDriver::Error::TimeOutError => e
-        if e.message == 'timed out after 5 seconds'
+        if e.message == 'timed out after 25 seconds'
           @browser.quit
           retry
         end
