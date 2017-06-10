@@ -87,15 +87,16 @@ namespace :readings do
                                               --ignore-certificate-errors
                                               --disable-popup-blocking
                                               --disable-translate
+                                              --no-sandbox
+                                              --disable-gpu
                                               --disable-default-apps
                                               --no-first-run],
                                               desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(chrome_opts)
 
-        # @browser = Selenium::WebDriver.for :chrome, prefs: prefs
         @browser.get('https://hydroottawa.com/account')
 
-        wait = Selenium::WebDriver::Wait.new(:timeout => 45)
-        wait25 = Selenium::WebDriver::Wait.new(:timeout => 55)
+        wait = Selenium::WebDriver::Wait.new(:timeout => 15)
+        wait25 = Selenium::WebDriver::Wait.new(:timeout => 25)
 
         login_modal = wait.until {
           element = @browser.find_element(:id, 'btnLRLogin')
@@ -139,7 +140,6 @@ namespace :readings do
           element if element.displayed?
         }
 
-        # @browser.find_element(xpath: "//img[@src='https://static.hydroottawa.com//images/account/landing/Bill.svg']").click
         puts "Test Passed: billing link found"
 
         begin
