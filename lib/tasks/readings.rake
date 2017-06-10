@@ -62,31 +62,22 @@ namespace :readings do
     StatsD.measure('york.app.save_job') do
       begin
         if Rails.env.production?
-          download_dir = '/app/tmp'
+          download_dir = '/app/Downloads'
         else
           download_dir = '/Users/work/code/hydro_bot/public'
         end
-        #### Chrome settings ####
-        # prefs = {
-        #   download: {
-        #     prompt_for_download: false,
-        #     default_directory: download_dir
-        #   }
-        # }
+
+        ### Chrome settings ####
+        prefs = {
+          download: {
+            prompt_for_download: false,
+            default_directory: download_dir
+          }
+        }
         if Rails.env.production?
           chrome_bin = ENV.fetch('GOOGLE_CHROME_BIN', nil)
         end
         chrome_opts = chrome_bin ? { "chromeOptions" => { "binary" => chrome_bin } } : {}
-
-        # Firefox settings
-        #
-        # profile = Selenium::WebDriver::Firefox::Profile.new
-        # profile['browser.download.dir'] = download_dir
-        # profile['browser.download.folderList'] = 2
-        # profile['browser.helperApps.neverAsk.saveToDisk'] = "application/vnd.ms-excel"
-        # profile['pdfjs.disabled'] = true
-        # @browser = Selenium::WebDriver.for :firefox, profile: profile
-        #
 
         @browser = Selenium::WebDriver.for :chrome, profile: prefs, switches: %w[--incognito
                                               --ignore-certificate-errors
