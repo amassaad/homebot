@@ -1,0 +1,43 @@
+{
+  "name": "hydro_bot",
+  "description": "hydro bot",
+  "scripts": {
+  },
+  "env": {
+    "BUGSNAG": {
+      "required": true
+    },
+    "DATADOG_API_KEY": {
+      "required": true
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HYDRO_EMAIL": {
+      "required": true
+    },
+    "HYDRO_PASSWORD": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "heroku-postgresql",
+    "scheduler"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    },
+    {
+      "url": "https://github.com/amassaad/heroku-buildpack-datadog.git"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-chromedriver.git"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-xvfb-google-chrome.git"
+    }
+  ]
+}
