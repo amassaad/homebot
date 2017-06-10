@@ -36,8 +36,7 @@ namespace :readings do
     end
     sheet1 = book.worksheets[0]
     date = sheet1.row(1)[0].to_s.gsub("Hourly Usage for ", '')
-    puts date
-    puts sheet1.row(4)
+
     sheet1.each 4 do |row|
       unless row[0].nil?
         puts row unless Rails.env.production?
