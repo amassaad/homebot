@@ -29,7 +29,7 @@ namespace :readings do
   desc "Import readings to the db from an excel file of hourly readings located in the applicaiton root"
   task import_from_file: :environment do
     if Rails.env.production?
-      book = Spreadsheet.open '/app/tmp/hourly.xls'
+      book = Spreadsheet.open '/app/Downloads/hourly.xls'
     else
       book = Spreadsheet.open 'public/hourly.xls'
       # book = Spreadsheet.open 'hourly.xls'
@@ -67,12 +67,12 @@ namespace :readings do
           download_dir = '/Users/work/code/hydro_bot/public'
         end
         #### Chrome settings ####
-        prefs = {
-          download: {
-            prompt_for_download: false,
-            default_directory: download_dir
-          }
-        }
+        # prefs = {
+        #   download: {
+        #     prompt_for_download: false,
+        #     default_directory: download_dir
+        #   }
+        # }
         if Rails.env.production?
           chrome_bin = ENV.fetch('GOOGLE_CHROME_BIN', nil)
         end
