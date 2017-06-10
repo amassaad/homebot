@@ -40,7 +40,6 @@ namespace :readings do
     sheet1.each 4 do |row|
       unless row[0].nil?
         puts row unless Rails.env.production?
-        time = row[0]
 
         r = Reading.new(time:     date + ' ' + row[0],
                         ratetype: row[1].to_s,
