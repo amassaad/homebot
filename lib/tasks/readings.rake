@@ -70,7 +70,7 @@ namespace :readings do
             default_directory: "/Users/work/code/hydro_bot/public"
           }
         }
-        chrome_bin = ENV.fetch('GOOGLE_CHROME_SHIM', nil)
+        chrome_bin = ENV.fetch('GOOGLE_CHROME_BIN', nil)
         chrome_opts = chrome_bin ? { "chromeOptions" => { "binary" => chrome_bin } } : {}
 
         # profile = Selenium::WebDriver::Firefox::Profile.new
