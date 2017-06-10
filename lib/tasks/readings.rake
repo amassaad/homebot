@@ -9,23 +9,6 @@ namespace :readings do
     sleep(25)
   end
 
-  desc "upload to s3 - run locally, or wherever firefox/chrome is sold"
-  task upload: :environment do
-    next unless file = File.open("public/hourly.xls")
-    uploader = HydroUploader.new
-    puts "Uploading . . . "
-    uploader.store!(file)
-    puts "Deleting the file now . . . "
-    File.delete(file)
-  end
-
-  desc "download from s3 - saves to the application root"
-  task download: :environment do
-    require 'open-uri'
-    download = open('https://s3-us-west-2.amazonaws.com/hydro-bot/hydro_uploads/hourly.xls')
-    Rails.env.production? ? IO.copy_stream(download, '/app/hourly.xls') : IO.copy_stream(download, '/Users/work/code/hydro_bot/hourly.xls')
-  end
-
   desc "Import readings to the db from an excel file of hourly readings located in the applicaiton root"
   task import_from_file: :environment do
     if Rails.env.production?
