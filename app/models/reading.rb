@@ -139,6 +139,11 @@ class Reading < ApplicationRecord
           @browser.quit
           retry
         end
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError => e
+        if e.message == 'stale element reference: element is not attached to the page document'
+          @browser.quit
+          retry
+        end
       end
     end
     sleep(25)
