@@ -14,8 +14,8 @@ class Reading < ApplicationRecord
 
         r = Reading.new(time:     date + ' ' + row[0],
                         ratetype: row[1].to_s,
-                        amount:   amount_format(row[2]),
-                        cost:     cost_format(row[3]))
+                        amount:   (row[2].gsub('kWh', '').to_f * 1000),
+                        cost:     (row[3] * 100).to_i)
         begin
           r.save!
         rescue ActiveRecord::RecordInvalid => e
@@ -142,15 +142,5 @@ class Reading < ApplicationRecord
       end
     end
     sleep(25)
-  end
-
-  private
-
-  def amount_format(amt)
-    amt.gsub('kWh', '').to_f * 1000
-  end
-
-  def cost_format(cost)
-    (cost * 100).to_i
   end
 end
