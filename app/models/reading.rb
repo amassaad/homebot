@@ -9,12 +9,14 @@ class Reading < ApplicationRecord
     date = sheet1.row(1)[0].to_s.gsub("Hourly Usage for ", '')
 
     sheet1.each 4 do |row|
+
       unless row[0].nil?
+
         puts row unless Rails.env.production?
 
-        r = Reading.new(time:     date + ' ' + row[0],
+        r = Reading.new(time:     row[0],
                         ratetype: row[1].to_s,
-                        amount:   (row[2].gsub('kWh', '').to_f * 1000),
+                        amount:   (row[2].to_f * 1000),
                         cost:     (row[3] * 100).to_i)
         begin
           r.save!
