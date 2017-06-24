@@ -62,10 +62,9 @@ class Reading < ApplicationRecord
 
         @browser.get('https://hydroottawa.com/account')
 
-        wait25 = Selenium::WebDriver::Wait.new(:timeout => 25)
         wait55 = Selenium::WebDriver::Wait.new(:timeout => 55)
 
-        login_modal = wait25.until {
+        login_modal = wait55.until {
           element = @browser.find_element(:id, 'btnLRLogin')
           element if element.displayed?
         }
@@ -73,21 +72,21 @@ class Reading < ApplicationRecord
 
         login_modal.click
 
-        email_element = wait25.until {
-          element = @browser.find_element(:name, 'emailid')
+        email_element = wait55.until {
+          element = @browser.find_element(:id, 'loginradius-raas-login-emailid')
           element if element.displayed?
         }
         email_element.send_keys(ENV['HYDRO_EMAIL'])
         puts "Test Passed: Email element found" if email_element.displayed?
 
-        password_element = wait25.until {
+        password_element = wait55.until {
           element = @browser.find_element(:id, 'loginradius-raas-login-password')
           element if element.displayed?
         }
         password_element.send_keys(ENV['HYDRO_PASSWORD'])
         puts "Test Passed: password element found" if password_element.displayed?
 
-        form = wait25.until {
+        form = wait55.until {
           element = @browser.find_element(:name, "loginradius-raas-login")
           element if element.displayed?
         }
