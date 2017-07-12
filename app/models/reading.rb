@@ -3,7 +3,7 @@ class Reading < ApplicationRecord
   validates :time, uniqueness: true
 
   def self.import
-    Rails.env.production? ? book = Spreadsheet.open('/app/Downloads/hourly.xls') : book = Spreadsheet.open('public/hourly.xls')
+    Rails.env.production? ? book = Spreadsheet.open('/app/hourly.xls') : book = Spreadsheet.open('public/hourly.xls')
 
     sheet1 = book.worksheets[0]
     date = sheet1.row(1)[0].to_s.gsub("Hourly Usage for ", '')
@@ -34,7 +34,7 @@ class Reading < ApplicationRecord
     StatsD.measure('york.app.save_job') do
       begin
         if Rails.env.production?
-          download_dir = '/app/Downloads'
+          download_dir = '/app/'
         else
           download_dir = '/Users/work/code/hydro_bot/public'
         end

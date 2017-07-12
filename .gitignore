@@ -20,7 +20,7 @@
 /config/application.yml
 public/hourly.xls
 hourly.xls
-
+hourly-latest.xls
 
 # General
 *.DS_Store
