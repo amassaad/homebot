@@ -119,7 +119,7 @@ class Reading < ApplicationRecord
         @browser.get('https://secure.hydroottawa.com/Usage/Secure/TOU/DownloadMyData.aspx')
 
         usage_file = wait55.until {
-          element = @browser.find_element(:id, 'ContentPlaceHolder1_mainContent_imgExcel')
+          element = @browser.find_element(:id, 'ContentPlaceHolder1_mainContent_btnExcel')
           element if element.displayed?
         }
         puts "Test Passed: usage file found" if usage_file.displayed?
