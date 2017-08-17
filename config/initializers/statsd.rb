@@ -1,1 +1,1 @@
-StatsD.prefix = 'hydrobot.ottawa'
+StatsD.prefix = 'homebot.ottawa'
