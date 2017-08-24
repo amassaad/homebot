@@ -10,19 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316123456) do
+ActiveRecord::Schema.define(version: 20170817195638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "readings", force: :cascade do |t|
-    t.datetime "time"
-    t.integer  "amount"
-    t.integer  "cost"
+  create_table "bandwidth_usages", force: :cascade do |t|
+    t.float "on_peak_download"
+    t.float "on_peak_upload"
+    t.float "off_peak_download"
+    t.float "off_peak_upload"
+    t.datetime "period"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "ratetype"
-    t.index ["time"], name: "index_readings_on_time", unique: true, using: :btree
+  end
+
+  create_table "readings", id: :serial, force: :cascade do |t|
+    t.datetime "time"
+    t.integer "amount"
+    t.integer "cost"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "ratetype"
+    t.index ["time"], name: "index_readings_on_time", unique: true
   end
 
 end
