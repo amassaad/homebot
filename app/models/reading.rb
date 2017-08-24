@@ -64,9 +64,9 @@ class Reading < ApplicationRecord
 
         @browser.get('https://hydroottawa.com/account')
 
-        wait55 = Selenium::WebDriver::Wait.new(:timeout => 55)
+        wait15 = Selenium::WebDriver::Wait.new(:timeout => 15)
 
-        login_modal = wait55.until {
+        login_modal = wait15.until {
           element = @browser.find_element(:id, 'btnLRLogin')
           element if element.displayed?
         }
@@ -74,21 +74,21 @@ class Reading < ApplicationRecord
 
         login_modal.click
 
-        email_element = wait55.until {
+        email_element = wait15.until {
           element = @browser.find_element(:id, 'loginradius-raas-login-emailid')
           element if element.displayed?
         }
         email_element.send_keys(ENV['HYDRO_EMAIL'])
         puts "Test Passed: Email element found" if email_element.displayed?
 
-        password_element = wait55.until {
+        password_element = wait15.until {
           element = @browser.find_element(:id, 'loginradius-raas-login-password')
           element if element.displayed?
         }
         password_element.send_keys(ENV['HYDRO_PASSWORD'])
         puts "Test Passed: password element found" if password_element.displayed?
 
-        form = wait55.until {
+        form = wait15.until {
           element = @browser.find_element(:name, "loginradius-raas-login")
           element if element.displayed?
         }
@@ -97,14 +97,14 @@ class Reading < ApplicationRecord
         form.find_element(:id, 'loginradius-raas-submit-Login').click
 
         begin
-          wait55.until { @browser.find_element(id: "foo") }
+          wait15.until { @browser.find_element(id: "foo") }
         rescue Selenium::WebDriver::Error::TimeOutError => e
         end
         # lol, security
         @browser.execute_script("SSO.login('BILLING');")
 
 
-        usage_link = wait55.until {
+        usage_link = wait15.until {
           element = @browser.find_element(xpath: "//img[@src='https://static.hydroottawa.com//images/account/landing/Bill.svg']")
           element if element.displayed?
         }
@@ -112,13 +112,13 @@ class Reading < ApplicationRecord
         puts "Test Passed: billing link found"
 
         begin
-          wait55.until { @browser.find_element(id: "foo") }
+          wait15.until { @browser.find_element(id: "foo") }
         rescue Selenium::WebDriver::Error::TimeOutError => e
         end
 
         @browser.get('https://secure.hydroottawa.com/Usage/Secure/TOU/DownloadMyData.aspx')
 
-        usage_file = wait55.until {
+        usage_file = wait15.until {
           element = @browser.find_element(:id, 'ContentPlaceHolder1_mainContent_btnExcel')
           element if element.displayed?
         }
@@ -126,9 +126,9 @@ class Reading < ApplicationRecord
         usage_file.click
 
         begin
-          wait55.until { @browser.find_element(id: "foo") }
+          wait15.until { @browser.find_element(id: "foo") }
         rescue Selenium::WebDriver::Error::TimeOutError => e
-          if e.message == 'timed out after 55 seconds (no such element: Unable to locate element: {"method":"id","selector":"foo"}'
+          if e.message == 'timed out after 15 seconds (no such element: Unable to locate element: {"method":"id","selector":"foo"}'
             next
           end
         end
@@ -136,7 +136,7 @@ class Reading < ApplicationRecord
         @browser.quit
 
       rescue Selenium::WebDriver::Error::TimeOutError => e
-        if e.message == 'timed out after 25 seconds'
+        if e.message == 'timed out after 15 seconds'
           @browser.quit
           retry
         end
@@ -147,6 +147,6 @@ class Reading < ApplicationRecord
         end
       end
     end
-    sleep(25)
+    sleep(15)
   end
 end
