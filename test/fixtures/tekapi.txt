@@ -1,0 +1,23 @@
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/8.0
+DataServiceVersion: 3.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Sun, 27 Aug 2017 18:43:34 GMT
+Content-Length: 734
+
+{
+  "odata.metadata":"http://api.teksavvy.com/web/Usage/$metadata#UsageSummaryRecords","value":[
+    {
+      "StartDate":"2017-06-01T00:00:00","EndDate":"2017-06-30T00:00:00","OID":"629069","IsCurrent":false,"OnPeakDownload":1317.37,"OnPeakUpload":432.81,"OffPeakDownload":158.74,"OffPeakUpload":146.17
+    },{
+      "StartDate":"2017-07-01T00:00:00","EndDate":"2017-07-31T00:00:00","OID":"629069","IsCurrent":false,"OnPeakDownload":562.21,"OnPeakUpload":761.07,"OffPeakDownload":96.14,"OffPeakUpload":309.16
+    },{
+      "StartDate":"2017-08-01T00:00:00","EndDate":"2017-08-27T00:00:00","OID":"629069","IsCurrent":true,"OnPeakDownload":263.24,"OnPeakUpload":881.61,"OffPeakDownload":31.2,"OffPeakUpload":256.14
+    }
+  ]
+}

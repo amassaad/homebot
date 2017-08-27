@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  on_peak_download: 1.5
+  on_peak_upload: 1.5
+  off_peak_download: 1.5
+  off_peak_upload: 1.5
+  period: 2017-08-17 15:56:38
+
+two:
+  on_peak_download: 1.5
+  on_peak_upload: 1.5
+  off_peak_download: 1.5
+  off_peak_upload: 1.5
+  period: 2017-08-17 15:56:38

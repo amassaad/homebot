@@ -25,6 +25,10 @@ development:
   <<: *default
   database: hydro_bot_development
 
+test:
+  <<: *default
+  database: hydro_bot_test
+
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
