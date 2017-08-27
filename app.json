@@ -1,6 +1,6 @@
 {
-  "name": "hydro_bot",
-  "description": "hydro bot",
+  "name": "homebot",
+  "description": "ottawahomebot",
   "scripts": {
   },
   "env": {
