@@ -35,6 +35,8 @@ gem 'spreadsheet'
 gem 'bugsnag'
 gem 'statsd-instrument'
 gem 'newrelic_rpm'
+gem 'httparty'
+gem 'webmock'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
