@@ -1,7 +1,7 @@
 namespace :fetch_climate do
   desc "Fetch Climate Conditions"
 
-  SLEEP = 60
+  SLEEP = 25
 
   task :now => :environment do
     Climate.get_conditions
