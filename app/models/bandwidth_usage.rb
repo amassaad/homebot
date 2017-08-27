@@ -12,6 +12,7 @@ class BandwidthUsage < ApplicationRecord
 
   def self.parse_usage_summary(slice)
     require 'httparty'
+    ENV['TEK_API'] || raise('no TEK_API provided')
 
     access_header = {"TekSavvy-APIKey" => ENV['TEK_API']}
     #detail
