@@ -7,7 +7,6 @@ class Reading < ApplicationRecord
       Rails.env.production? ? book = Spreadsheet.open('/app/Downloads/hourly.xls') : book = Spreadsheet.open('public/hourly.xls')
     rescue Errno::ENOENT => e
       puts "Error: #{e.message}"
-      next
     end
 
     sheet1 = book.worksheets[0]
