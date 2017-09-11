@@ -3,7 +3,12 @@ class Reading < ApplicationRecord
   validates :time, uniqueness: true
 
   def self.import
-    Rails.env.production? ? book = Spreadsheet.open('/app/Downloads/hourly.xls') : book = Spreadsheet.open('public/hourly.xls')
+    begin
+      Rails.env.production? ? book = Spreadsheet.open('/app/Downloads/hourly.xls') : book = Spreadsheet.open('public/hourly.xls')
+    rescue Errno::ENOENT => e
+      puts "Error: #{e.message}"
+      next
+    end
 
     sheet1 = book.worksheets[0]
     date = sheet1.row(1)[0].to_s.gsub("Hourly Usage for ", '')
