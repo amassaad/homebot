@@ -9,27 +9,30 @@ class Reading < ApplicationRecord
       puts "Error: #{e.message}"
     end
 
-    sheet1 = book.worksheets[0]
-    date = sheet1.row(1)[0].to_s.gsub("Hourly Usage for ", '')
+    if book.worksheets[0]
+      sheet1 = book.worksheets[0]
 
-    sheet1.each 4 do |row|
+      date = sheet1.row(1)[0].to_s.gsub("Hourly Usage for ", '')
 
-      unless row[0].nil?
+      sheet1.each 4 do |row|
 
-        puts row unless Rails.env.production?
+        unless row[0].nil?
 
-        r = Reading.new(time:     row[0],
-                        ratetype: row[1].to_s,
-                        amount:   (row[2].to_f * 1000),
-                        cost:     (row[3] * 100).to_i)
-        begin
-          r.save!
-        rescue ActiveRecord::RecordInvalid => e
-          if e.message == 'Validation failed: Time has already been taken'
-            next
+          puts row unless Rails.env.production?
+
+          r = Reading.new(time:     row[0],
+                          ratetype: row[1].to_s,
+                          amount:   (row[2].to_f * 1000),
+                          cost:     (row[3] * 100).to_i)
+          begin
+            r.save!
+          rescue ActiveRecord::RecordInvalid => e
+            if e.message == 'Validation failed: Time has already been taken'
+              next
+            end
           end
-        end
 
+        end
       end
     end
   end
