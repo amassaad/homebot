@@ -13,7 +13,7 @@ class BandwidthUsage < ApplicationRecord
   def self.parse_usage_summary(slice)
     require 'httparty'
     ENV['TEK_API'] || raise('no TEK_API provided')
-
+    tries ||= 10
     access_header = {"TekSavvy-APIKey" => ENV['TEK_API']}
     #detail
     # response = HTTParty.get('https://api.teksavvy.com/web/Usage/UsageRecords', headers: access_header)
@@ -25,5 +25,9 @@ class BandwidthUsage < ApplicationRecord
     @bandwidth.on_peak_upload = response['value'][slice]['OnPeakUpload']
     @bandwidth.off_peak_upload = response['value'][slice]['OffPeakUpload']
     @bandwidth.save!
+  rescue NoMethodError
+    retry unless (tries -= 1).zero?
+  else
+    logger.info("Successfully fetched bandwidth")
   end
 end

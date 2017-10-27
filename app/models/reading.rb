@@ -9,7 +9,7 @@ class Reading < ApplicationRecord
       puts "Error: #{e.message}"
     end
 
-    if book.worksheets[0]
+    unless book.worksheets[0].nil?
       sheet1 = book.worksheets[0]
 
       date = sheet1.row(1)[0].to_s.gsub("Hourly Usage for ", '')
