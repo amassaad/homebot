@@ -71,6 +71,7 @@ class Reading < ApplicationRecord
 
         @browser.get('https://hydroottawa.com/account')
 
+        wait5 = Selenium::WebDriver::Wait.new(:timeout => 5)
         wait15 = Selenium::WebDriver::Wait.new(:timeout => 15)
 
         login_modal = wait15.until {
@@ -108,24 +109,17 @@ class Reading < ApplicationRecord
         rescue Selenium::WebDriver::Error::TimeOutError => e
         end
         # lol, security
+        puts "js security bypassed"
         @browser.execute_script("SSO.login('BILLING');")
-
-
-        usage_link = wait15.until {
-          element = @browser.find_element(xpath: "//img[@src='https://static.hydroottawa.com//images/account/landing/Bill.svg']")
-          element if element.displayed?
-        }
-
-        puts "Test Passed: billing link found"
 
         begin
           wait15.until { @browser.find_element(id: "foo") }
         rescue Selenium::WebDriver::Error::TimeOutError => e
         end
-
+        puts  "Clicking DataDownload"
         @browser.get('https://secure.hydroottawa.com/Usage/Secure/TOU/DownloadMyData.aspx')
 
-        usage_file = wait15.until {
+        usage_file = wait5.until {
           element = @browser.find_element(:id, 'ContentPlaceHolder1_mainContent_btnExcel')
           element if element.displayed?
         }
