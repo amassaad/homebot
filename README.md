@@ -1,6 +1,6 @@
 # README
 
-Build Status: [![CircleCI](https://circleci.com/gh/amassaad/hydro_bot.svg?style=svg)](https://circleci.com/gh/amassaad/hydro_bot)
+Build Status: [![CircleCI](https://circleci.com/gh/amassaad/homebot.svg?style=svg)](https://circleci.com/gh/amassaad/homebot)
 
 ## Details
 This is a Rails app to scrape the web for various data, for eg Hydro Ottawa cost and usage, Teksavvy Internet Bandwidth and local weather.
