@@ -1,0 +1,22 @@
+homebot-db:
+  environment:
+    - POSTGRES_PASSWORD=foobar
+  image: 'postgres:latest'
+  restart: always
+homebot:
+  autoredeploy: true
+  environment:
+    - DB_HOST=homebot-db
+    - DB_PASSWORD=foobar
+    - DB_USER=postgres
+    - RAILS_ENV=production
+    - RAILS_MAX_THREADS=5
+    - SECRET_KEY_BASE=foobar
+    - PORT=29819
+    - BUGSNAG=bugs
+  image: 'ieee1394/homebot:latest'
+  links:
+    - homebot-db
+  ports:
+    - '29819:29819'
+  restart: always
