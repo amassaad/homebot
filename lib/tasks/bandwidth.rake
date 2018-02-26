@@ -2,7 +2,7 @@ namespace :bandwidth do
 
   desc "emit latest bandwidth usage"
   task emit: :environment do
-    next unless @bandwidth = BandwidthUsage.last
+    @bandwidth = BandwidthUsage.last
     StatsD.gauge('bandwidth.onpeak.download', @bandwidth.on_peak_download)
     StatsD.gauge('bandwidth.onpeak.upload', @bandwidth.on_peak_upload)
     StatsD.gauge('bandwidth.offpeak.download', @bandwidth.off_peak_download)
