@@ -28,6 +28,8 @@ development:
 test:
   <<: *default
   database: homebot_test
+  user: root
+  password: 'circleci_test'
 
 production:
   <<: *default
