@@ -8,9 +8,12 @@ jobs:
         environment:
           PGHOST: localhost
           RAILS_ENV: test
+          PGUSER: root
+
       - image: postgres:9.5
         environment:
           POSTGRES_DB: homebot_test
+          POSTGRES_USER: root
     steps:
       - checkout
 
