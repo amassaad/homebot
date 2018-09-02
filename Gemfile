@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 ruby '2.5.1'
@@ -45,7 +47,7 @@ end
 
 group :development do
   gem 'annotate'
-  gem 'brakeman', :require => false
+  gem 'brakeman', require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'

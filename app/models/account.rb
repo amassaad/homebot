@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: accounts
@@ -35,7 +37,7 @@ class Account < ApplicationRecord
     username = ENV['MINT_USER']
     password = ENV['MINT_PASS']
 
-    stdout, status = Open3.capture2('mintapi', "#{username}", "#{password}")
+    stdout, status = Open3.capture2('mintapi', username.to_s, password.to_s)
     raise StandardError unless status.success?
 
     # file = File.read(Rails.root.join('accounts.json'))

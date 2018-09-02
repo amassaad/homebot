@@ -1,5 +1,6 @@
-namespace :readings do
+# frozen_string_literal: true
 
+namespace :readings do
   desc "emit hydro usage from 24 hours ago"
   task emit: :environment do
     next unless @reading = Reading.where(time: (Time.now - 48.hours)..(Time.now - 47.hours)).first

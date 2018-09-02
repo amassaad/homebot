@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBandwidthUsages < ActiveRecord::Migration[5.1]
   def change
     create_table :bandwidth_usages do |t|

@@ -1,5 +1,6 @@
-namespace :mint do
+# frozen_string_literal: true
 
+namespace :mint do
   desc "emit latest mint account status"
   task emit: :environment do
     # @bandwidth = BandwidthUsage.last

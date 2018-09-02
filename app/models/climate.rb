@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Climate < ApplicationRecord
   require 'date'
   require 'net/https'
@@ -40,16 +42,15 @@ class Climate < ApplicationRecord
       #   "pressure"=>1023.35,
       #   "ozone"=>318.71
       # }
-      StatsD.gauge('york.climate.precipIntensity', currently["precipIntensity"].to_f )
+      StatsD.gauge('york.climate.precipIntensity', currently["precipIntensity"].to_f)
 
-      StatsD.gauge('york.climate.precipProbability', currently["precipProbability"].to_f )
+      StatsD.gauge('york.climate.precipProbability', currently["precipProbability"].to_f)
 
       humidity = (currently["humidity"] * 100)
-      StatsD.gauge('york.climate.apparentTemperature', currently["apparentTemperature"].to_f )
+      StatsD.gauge('york.climate.apparentTemperature', currently["apparentTemperature"].to_f)
 
-      StatsD.gauge('york.climate.humidity', humidity.to_f )
-      StatsD.gauge('york.climate.windSpeed', currently["windSpeed"].to_f )
+      StatsD.gauge('york.climate.humidity', humidity.to_f)
+      StatsD.gauge('york.climate.windSpeed', currently["windSpeed"].to_f)
     end
   end
-
 end
