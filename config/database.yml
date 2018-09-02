@@ -23,11 +23,11 @@ default: &default
 
 development:
   <<: *default
-  database: hydro_bot_development
+  database: homebot_development
 
 test:
   <<: *default
-  database: hydro_bot_test
+  database: homebot_test
 
 production:
   <<: *default

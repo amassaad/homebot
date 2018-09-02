@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170817195638) do
+ActiveRecord::Schema.define(version: 20180901231744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.datetime "closeDateInDate"
+    t.datetime "lastUpdatedInDate"
+    t.string "currency"
+    t.float "interestRate"
+    t.float "dueAmt"
+    t.datetime "dueDate"
+    t.integer "accountId"
+    t.string "fiLoginStatus"
+    t.datetime "addAccountDateInDate"
+    t.string "yodleeAccountNumberLastFour"
+    t.string "accountName"
+    t.integer "status"
+    t.boolean "isClosed"
+    t.float "value"
+    t.string "accountType"
+    t.boolean "isError"
+    t.boolean "isActive"
+    t.string "fiName"
+    t.float "currentBalance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "bandwidth_usages", force: :cascade do |t|
     t.float "on_peak_download"

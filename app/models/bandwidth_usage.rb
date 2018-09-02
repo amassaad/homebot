@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: bandwidth_usages
+#
+#  id                :bigint(8)        not null, primary key
+#  off_peak_download :float
+#  off_peak_upload   :float
+#  on_peak_download  :float
+#  on_peak_upload    :float
+#  period            :datetime
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
+
 class BandwidthUsage < ApplicationRecord
   require 'httparty'
 

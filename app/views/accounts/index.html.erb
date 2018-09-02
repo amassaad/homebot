@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Accounts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Closedateindate</th>
+      <th>Lastupdatedindate</th>
+      <th>Currency</th>
+      <th>Interestrate</th>
+      <th>Dueamt</th>
+      <th>Duedate</th>
+      <th>Accountid</th>
+      <th>Filoginstatus</th>
+      <th>Addaccountdateindate</th>
+      <th>Yodleeaccountnumberlastfour</th>
+      <th>Accountname</th>
+      <th>Status</th>
+      <th>Isclosed</th>
+      <th>Value</th>
+      <th>Accounttype</th>
+      <th>Iserror</th>
+      <th>Isactive</th>
+      <th>Finame</th>
+      <th>Currentbalance</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accounts.each do |account| %>
+      <tr>
+        <td><%= account.closeDateInDate %></td>
+        <td><%= account.lastUpdatedInDate %></td>
+        <td><%= account.currency %></td>
+        <td><%= account.interestRate %></td>
+        <td><%= account.dueAmt %></td>
+        <td><%= account.dueDate %></td>
+        <td><%= account.accountId %></td>
+        <td><%= account.fiLoginStatus %></td>
+        <td><%= account.addAccountDateInDate %></td>
+        <td><%= account.yodleeAccountNumberLastFour %></td>
+        <td><%= account.accountName %></td>
+        <td><%= account.status %></td>
+        <td><%= account.isClosed %></td>
+        <td><%= account.value %></td>
+        <td><%= account.accountType %></td>
+        <td><%= account.isError %></td>
+        <td><%= account.isActive %></td>
+        <td><%= account.fiName %></td>
+        <td><%= account.currentBalance %></td>
+        <td><%= link_to 'Show', account %></td>
+        <td><%= link_to 'Edit', edit_account_path(account) %></td>
+        <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Account', new_account_path %>
