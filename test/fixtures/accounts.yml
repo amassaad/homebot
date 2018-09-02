@@ -1,0 +1,71 @@
+# == Schema Information
+#
+# Table name: accounts
+#
+#  id                          :bigint(8)        not null, primary key
+#  accountId                   :integer
+#  accountName                 :string
+#  accountType                 :string
+#  addAccountDateInDate        :datetime
+#  closeDateInDate             :datetime
+#  currency                    :string
+#  currentBalance              :float
+#  dueAmt                      :float
+#  dueDate                     :datetime
+#  fiLoginStatus               :string
+#  fiName                      :string
+#  interestRate                :float
+#  isActive                    :boolean
+#  isClosed                    :boolean
+#  isError                     :boolean
+#  lastUpdatedInDate           :datetime
+#  status                      :integer
+#  value                       :float
+#  yodleeAccountNumberLastFour :string
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  closeDateInDate: 2018-09-01 17:28:25
+  lastUpdatedInDate: 2018-09-01 17:28:25
+  currency: MyString
+  interestRate: 1.5
+  dueAmt: 1.5
+  dueDate: 2018-09-01 17:28:25
+  accountId: 1
+  fiLoginStatus: MyString
+  addAccountDateInDate: 2018-09-01 17:28:25
+  yodleeAccountNumberLastFour: MyString
+  accountName: MyString
+  status: 1
+  isClosed: false
+  value: 1.5
+  accountType: MyString
+  isError: false
+  isActive: false
+  fiName: MyString
+  currentBalance: 1.5
+
+two:
+  closeDateInDate: 2018-09-01 17:28:25
+  lastUpdatedInDate: 2018-09-01 17:28:25
+  currency: MyString
+  interestRate: 1.5
+  dueAmt: 1.5
+  dueDate: 2018-09-01 17:28:25
+  accountId: 1
+  fiLoginStatus: MyString
+  addAccountDateInDate: 2018-09-01 17:28:25
+  yodleeAccountNumberLastFour: MyString
+  accountName: MyString
+  status: 1
+  isClosed: false
+  value: 1.5
+  accountType: MyString
+  isError: false
+  isActive: false
+  fiName: MyString
+  currentBalance: 1.5

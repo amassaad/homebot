@@ -1,23 +1,39 @@
+# frozen_string_literal: true
+
+# == Schema Information
+#
+# Table name: bandwidth_usages
+#
+#  id                :bigint(8)        not null, primary key
+#  off_peak_download :float
+#  off_peak_upload   :float
+#  on_peak_download  :float
+#  on_peak_upload    :float
+#  period            :datetime
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
+
 class BandwidthUsage < ApplicationRecord
   require 'httparty'
 
   validates :on_peak_download, :on_peak_upload, :off_peak_download, :off_peak_upload, presence: true
   validates :period, uniqueness: true
 
-   def self.fetch
+  def self.fetch
     StatsD.measure('bandwidth_usage.save_job') do
       parse_usage_summary(0)
       parse_usage_summary(1)
       parse_usage_summary(2)
     end
-  end
+ end
 
   def self.parse_usage_summary(slice)
     ENV['TEK_API'] || raise('no TEK_API provided')
-    access_header = {"TekSavvy-APIKey" => ENV['TEK_API']}
+    access_header = { "TekSavvy-APIKey" => ENV['TEK_API'] }
     begin
       # tries ||= 10
-      #detail
+      # detail
       # response = HTTParty.get('https://api.teksavvy.com/web/Usage/UsageRecords', headers: access_header)
       response = HTTParty.get('https://api.teksavvy.com/web/Usage/UsageSummaryRecords', headers: access_header)
       date = DateTime.strptime(response['value'][slice]['StartDate'].to_s, "%Y-%m-%d")

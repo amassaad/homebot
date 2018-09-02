@@ -1,0 +1,112 @@
+<%= form_with(model: account, local: true) do |form| %>
+  <% if account.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(account.errors.count, "error") %> prohibited this account from being saved:</h2>
+
+      <ul>
+      <% account.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :closeDateInDate %>
+    <%= form.datetime_select :closeDateInDate, id: :account_closeDateInDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lastUpdatedInDate %>
+    <%= form.datetime_select :lastUpdatedInDate, id: :account_lastUpdatedInDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :currency %>
+    <%= form.text_field :currency, id: :account_currency %>
+  </div>
+
+  <div class="field">
+    <%= form.label :interestRate %>
+    <%= form.text_field :interestRate, id: :account_interestRate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dueAmt %>
+    <%= form.text_field :dueAmt, id: :account_dueAmt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dueDate %>
+    <%= form.datetime_select :dueDate, id: :account_dueDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accountId %>
+    <%= form.number_field :accountId, id: :account_accountId %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fiLoginStatus %>
+    <%= form.text_field :fiLoginStatus, id: :account_fiLoginStatus %>
+  </div>
+
+  <div class="field">
+    <%= form.label :addAccountDateInDate %>
+    <%= form.datetime_select :addAccountDateInDate, id: :account_addAccountDateInDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :yodleeAccountNumberLastFour %>
+    <%= form.text_field :yodleeAccountNumberLastFour, id: :account_yodleeAccountNumberLastFour %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accountName %>
+    <%= form.text_field :accountName, id: :account_accountName %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.number_field :status, id: :account_status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :isClosed %>
+    <%= form.check_box :isClosed, id: :account_isClosed %>
+  </div>
+
+  <div class="field">
+    <%= form.label :value %>
+    <%= form.text_field :value, id: :account_value %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accountType %>
+    <%= form.text_field :accountType, id: :account_accountType %>
+  </div>
+
+  <div class="field">
+    <%= form.label :isError %>
+    <%= form.check_box :isError, id: :account_isError %>
+  </div>
+
+  <div class="field">
+    <%= form.label :isActive %>
+    <%= form.check_box :isActive, id: :account_isActive %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fiName %>
+    <%= form.text_field :fiName, id: :account_fiName %>
+  </div>
+
+  <div class="field">
+    <%= form.label :currentBalance %>
+    <%= form.text_field :currentBalance, id: :account_currentBalance %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

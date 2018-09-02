@@ -1,5 +1,6 @@
-namespace :bandwidth do
+# frozen_string_literal: true
 
+namespace :bandwidth do
   desc "emit latest bandwidth usage"
   task emit: :environment do
     @bandwidth = BandwidthUsage.last

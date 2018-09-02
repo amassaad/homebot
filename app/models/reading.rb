@@ -1,3 +1,22 @@
+# frozen_string_literal: true
+
+# == Schema Information
+#
+# Table name: readings
+#
+#  id         :integer          not null, primary key
+#  amount     :integer
+#  cost       :integer
+#  ratetype   :string
+#  time       :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_readings_on_time  (time) UNIQUE
+#
+
 class Reading < ApplicationRecord
   validates :time, :amount, :cost, presence: true
   validates :time, uniqueness: true
