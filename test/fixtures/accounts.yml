@@ -40,7 +40,6 @@ one:
   addAccountDateInDate: 2018-09-01 17:28:25
   yodleeAccountNumberLastFour: MyString
   accountName: MyString
-  lastUpdatedInString: MyString
   status: 1
   isClosed: false
   value: 1.5
@@ -62,7 +61,6 @@ two:
   addAccountDateInDate: 2018-09-01 17:28:25
   yodleeAccountNumberLastFour: MyString
   accountName: MyString
-  lastUpdatedInString: MyString
   status: 1
   isClosed: false
   value: 1.5

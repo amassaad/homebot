@@ -7,13 +7,10 @@ jobs:
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
           PGHOST: localhost
-          PGUSER: homebot
           RAILS_ENV: test
       - image: postgres:9.5
         environment:
-          POSTGRES_USER: homebot
           POSTGRES_DB: homebot_test
-          POSTGRES_PASSWORD: ""
     steps:
       - checkout
 
