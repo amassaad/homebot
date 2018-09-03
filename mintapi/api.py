@@ -91,9 +91,9 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
         chrome_options.add_argument('disable-dev-shm-usage')
         chrome_options.add_argument('disable-gpu')
         # chrome_options.add_argument("--window-size=1920x1080")
-        chrome_options.add
+        chrome_options.add_argument('binary_location=/app/.apt/usr/bin/google-chrome')
 
-    driver = Chrome(chrome_options=chrome_options, '/app/.apt/usr/bin/google-chrome')
+    driver = Chrome(chrome_options=chrome_options, '/app/.chromedriver/bin/chromedriver')
     driver.get("https://www.mint.com")
     driver.implicitly_wait(20)  # seconds
     driver.find_element_by_link_text("Log In").click()
