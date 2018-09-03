@@ -40,7 +40,12 @@ class Account < ApplicationRecord
     username = ENV['MINT_USER']
     password = ENV['MINT_PASS']
 
-    stdout, status = Open3.capture2('python', 'mintapi/api.py', username.to_s, password.to_s)
+    if Rails.env.development?
+      stdout, status = Open3.capture2('mintapi', username.to_s, password.to_s)
+    else
+      stdout, status = Open3.capture2('python', 'mintapi/api.py', username.to_s, password.to_s)
+    end
+
     raise StandardError unless status.success?
 
     # file = File.read(Rails.root.join('accounts.json'))
