@@ -66,7 +66,7 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
     executable_path = os.getcwd()
     if _platform == "linux" or _platform == "linux2":
         zip_type = 'linux'
-        executable_path += "/chromedriver"
+        executable_path += "/app/.chromedriver/bin/chromedriver"
     elif _platform == "darwin":
         zip_type = 'mac'
         executable_path += "/chromedriver"
