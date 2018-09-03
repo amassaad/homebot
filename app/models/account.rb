@@ -32,6 +32,9 @@ require 'json'
 
 class Account < ApplicationRecord
   scope :closed, -> { where(isClosed: true) }
+  scope :active, -> { where(isClosed: false) }
+  scope :bank, -> { where(accountType: 'bank') }
+  scope :credit, -> { where(accountType: 'credit') }
 
   def self.update_from_api
     username = ENV['MINT_USER']

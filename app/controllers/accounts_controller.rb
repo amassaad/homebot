@@ -6,8 +6,8 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @bank_accounts = Account.where(accountType: 'bank').where.not(isClosed: true)
-    @credit_accounts = Account.where(accountType: 'credit').where.not(isClosed: true)
+    @bank_accounts = Account.bank.active
+    @credit_accounts = Account.credit.active
 
     @accounts = @bank_accounts + @credit_accounts
   end

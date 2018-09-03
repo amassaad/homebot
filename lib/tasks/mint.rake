@@ -3,14 +3,15 @@
 namespace :mint do
   desc "emit latest mint account status"
   task emit: :environment do
-    # @bandwidth = BandwidthUsage.last
-    # StatsD.gauge('bandwidth.onpeak.download', @bandwidth.on_peak_download)
-    # StatsD.gauge('bandwidth.onpeak.upload', @bandwidth.on_peak_upload)
-    # StatsD.gauge('bandwidth.offpeak.download', @bandwidth.off_peak_download)
-    # StatsD.gauge('bandwidth.offpeak.upload', @bandwidth.off_peak_upload)
-    # StatsD.gauge('bandwidth.total.download', @bandwidth.off_peak_download + @bandwidth.on_peak_download)
-    # StatsD.gauge('bandwidth.total.upload', @bandwidth.off_peak_upload + @bandwidth.on_peak_upload)
+    Account.bank.active.each do |account|
+      StatsD.gauge('mint.account.bank.balance', account.value, tags: ["account_name:#{account.accountName}"])
+      StatsD.gauge('mint.account.bank.interest_rate', account.interestRate || 0, tags: ["account_name:#{account.accountName}"])
+    end
 
+    Account.credit.active.each do |account|
+      StatsD.gauge('mint.account.credit.balance', account.value, tags: ["account_name:#{account.accountName}"])
+      StatsD.gauge('mint.account.credit.interest_rate', account.interestRate|| 0, tags: ["account_name:#{account.accountName}"])
+    end
     sleep(25)
   end
 
