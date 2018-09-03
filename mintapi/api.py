@@ -63,8 +63,7 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
         mfa_method = "sms"
 
     zip_type = ""
-    # executable_path = os.getcwd()
-    executable_path = '/app/.apt/usr/bin/google-chrome'
+    executable_path = os.getcwd()
 
     if _platform == "linux" or _platform == "linux2":
         zip_type = 'linux'
@@ -91,9 +90,9 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
         chrome_options.add_argument('disable-dev-shm-usage')
         chrome_options.add_argument('disable-gpu')
         # chrome_options.add_argument("--window-size=1920x1080")
-        chrome_options.add_argument('binary_location=/app/.apt/usr/bin/google-chrome')
+        chrome_options.binary('/app/.apt/usr/bin/google-chrome')
 
-    driver = Chrome(chrome_options=chrome_options, '/app/.chromedriver/bin/chromedriver')
+    driver = Chrome(chrome_options=chrome_options, , executable_path="%s" % executable_path)
     driver.get("https://www.mint.com")
     driver.implicitly_wait(20)  # seconds
     driver.find_element_by_link_text("Log In").click()
