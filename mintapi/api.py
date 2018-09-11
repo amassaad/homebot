@@ -84,11 +84,14 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
         os.chmod(executable_path, 0o755)
 
     chrome_options = ChromeOptions()
+    chrome_options.binary_location('/app/.apt/usr/bin/google-chrome')
+
     if headless:
         chrome_options.add_argument('headless')
         chrome_options.add_argument('no-sandbox')
         chrome_options.add_argument('disable-dev-shm-usage')
         chrome_options.add_argument('disable-gpu')
+
         # chrome_options.add_argument("--window-size=1920x1080")
         #
         #
@@ -97,7 +100,6 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
         #
         #
         #https://stackoverflow.com/questions/45500606/set-chrome-browser-binary-through-chromedriver-in-python
-    chrome_options.binary_location('/app/.apt/usr/bin/google-chrome')
 
     driver = Chrome(chrome_options=chrome_options, executable_path="%s" % executable_path)
     driver.get("https://www.mint.com")
