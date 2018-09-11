@@ -97,7 +97,7 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
         #
         #
         #https://stackoverflow.com/questions/45500606/set-chrome-browser-binary-through-chromedriver-in-python
-    chrome_options.binary('/app/.apt/usr/bin/google-chrome')
+    chrome_options.binary_location('/app/.apt/usr/bin/google-chrome')
 
     driver = Chrome(chrome_options=chrome_options, executable_path="%s" % executable_path)
     driver.get("https://www.mint.com")
