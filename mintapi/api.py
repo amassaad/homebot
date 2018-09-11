@@ -84,7 +84,7 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
         os.chmod(executable_path, 0o755)
 
     chrome_options = ChromeOptions()
-    # chrome_options.binary_location('/app/.apt/usr/bin/google-chrome')
+    chrome_options.binary_location = '/app/.apt/usr/bin/google-chrome'
 
     if headless:
         chrome_options.add_argument('headless')
