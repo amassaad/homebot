@@ -67,7 +67,7 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
 
     if _platform == "linux" or _platform == "linux2":
         zip_type = 'linux'
-        executable_path += "/app/.chromedriver/bin/chromedriver"
+        executable_path += "/.chromedriver/bin/chromedriver"
     elif _platform == "darwin":
         zip_type = 'mac'
         executable_path += "/chromedriver"
@@ -90,9 +90,16 @@ def get_web_driver(email, password, headless=False, mfa_method=None,
         chrome_options.add_argument('disable-dev-shm-usage')
         chrome_options.add_argument('disable-gpu')
         # chrome_options.add_argument("--window-size=1920x1080")
-        chrome_options.binary('/app/.apt/usr/bin/google-chrome')
+        #
+        #
+        #
+        #
+        #
+        #
+        #https://stackoverflow.com/questions/45500606/set-chrome-browser-binary-through-chromedriver-in-python
+    chrome_options.binary('/app/.apt/usr/bin/google-chrome')
 
-    driver = Chrome(chrome_options=chrome_options, , executable_path="%s" % executable_path)
+    driver = Chrome(chrome_options=chrome_options, executable_path="%s" % executable_path)
     driver.get("https://www.mint.com")
     driver.implicitly_wait(20)  # seconds
     driver.find_element_by_link_text("Log In").click()
