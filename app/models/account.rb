@@ -35,12 +35,14 @@ class Account < ApplicationRecord
   scope :active, -> { where(isClosed: false) }
   scope :bank, -> { where(accountType: 'bank') }
   scope :credit, -> { where(accountType: 'credit') }
+  scope :investment, -> { where(accountType: 'investment') }
 
   def self.update_from_api
     username = ENV['MINT_USER']
     password = ENV['MINT_PASS']
 
     if Rails.env.development?
+      # stdout, status = Open3.capture2('mintapi', username.to_s, password.to_s,  '--headless')
       stdout, status = Open3.capture2('mintapi', username.to_s, password.to_s)
     else
       stdout, status = Open3.capture2('python', 'mintapi/api.py', username.to_s, password.to_s)
@@ -76,5 +78,28 @@ class Account < ApplicationRecord
           yodleeAccountNumberLastFour: account['yodleeAccountNumberLastFour']
         )
     end
+  end
+
+  def self.emit_mint
+    Account.bank.active.each do |account|
+      puts "Name: #{account.accountName} | Value: #{account.value}"
+
+      StatsD.gauge('mint.account.bank.balance', account.value, tags: ["account_name:#{account.accountName}"])
+      StatsD.gauge('mint.account.bank.interest_rate', account.interestRate || 0, tags: ["account_name:#{account.accountName}"])
+    end
+
+    Account.investment.active.each do |account|
+      puts "Name: #{account.accountName} | Value: #{account.value}"
+
+      StatsD.gauge('mint.account.investment.balance', account.value, tags: ["account_name:#{account.accountName}"])
+    end
+
+    Account.credit.active.each do |account|
+      puts "Name: #{account.accountName} | Value: #{account.value}"
+
+      StatsD.gauge('mint.account.credit.balance', account.value, tags: ["account_name:#{account.accountName}"])
+      StatsD.gauge('mint.account.credit.interest_rate', account.interestRate|| 0, tags: ["account_name:#{account.accountName}"])
+    end
+    sleep(25)
   end
 end
