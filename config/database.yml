@@ -24,12 +24,13 @@ default: &default
 development:
   <<: *default
   database: homebot_development
+  username: work
 
 test:
   <<: *default
   database: homebot_test
-  user: root
-  password: 'circleci_test'
+  user: work
+  password:
 
 production:
   <<: *default

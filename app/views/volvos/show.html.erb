@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vehicle:</strong>
+  <%= @volvo.vehicle_id %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @volvo.position %>
+</p>
+
+<p>
+  <strong>Registration number:</strong>
+  <%= @volvo.registration_number %>
+</p>
+
+<p>
+  <strong>Vin:</strong>
+  <%= @volvo.vin %>
+</p>
+
+<%= link_to 'Edit', edit_volvo_path(@volvo) %> |
+<%= link_to 'Back', volvos_path %>

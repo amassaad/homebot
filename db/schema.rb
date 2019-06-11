@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180901231744) do
+ActiveRecord::Schema.define(version: 20190425193042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,19 @@ ActiveRecord::Schema.define(version: 20180901231744) do
     t.datetime "updated_at", null: false
     t.string "ratetype"
     t.index ["time"], name: "index_readings_on_time", unique: true
+  end
+
+  create_table "volvos", force: :cascade do |t|
+    t.integer "vehicle_id"
+    t.string "position"
+    t.string "registration_number"
+    t.integer "odometer"
+    t.integer "lease_limit"
+    t.integer "fuel_amount"
+    t.integer "fuel_amount_level"
+    t.string "vin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

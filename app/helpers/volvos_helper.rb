@@ -1,0 +1,2 @@
+module VolvosHelper
+end
