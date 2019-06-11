@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VolvosController < ApplicationController
   before_action :set_volvo, only: [:show, :edit, :update, :destroy]
 
@@ -62,13 +64,14 @@ class VolvosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_volvo
-      @volvo = Volvo.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def volvo_params
-      params.require(:volvo).permit(:vehicle_id, :position, :registration_number, :vin)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_volvo
+    @volvo = Volvo.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def volvo_params
+    params.require(:volvo).permit(:vehicle_id, :position, :registration_number, :vin)
+  end
 end
