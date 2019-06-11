@@ -98,7 +98,7 @@ class Account < ApplicationRecord
       puts "Name: #{account.accountName} | Value: #{account.value}"
 
       StatsD.gauge('mint.account.credit.balance', account.value, tags: ["account_name:#{account.accountName}"])
-      StatsD.gauge('mint.account.credit.interest_rate', account.interestRate|| 0, tags: ["account_name:#{account.accountName}"])
+      StatsD.gauge('mint.account.credit.interest_rate', account.interestRate || 0, tags: ["account_name:#{account.accountName}"])
     end
     sleep(25)
   end

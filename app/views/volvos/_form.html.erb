@@ -1,0 +1,37 @@
+<%= form_with(model: volvo, local: true) do |form| %>
+  <% if volvo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(volvo.errors.count, "error") %> prohibited this volvo from being saved:</h2>
+
+      <ul>
+      <% volvo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :vehicle_id %>
+    <%= form.number_field :vehicle_id, id: :volvo_vehicle_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :position %>
+    <%= form.text_field :position, id: :volvo_position %>
+  </div>
+
+  <div class="field">
+    <%= form.label :registration_number %>
+    <%= form.text_field :registration_number, id: :volvo_registration_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vin %>
+    <%= form.text_field :vin, id: :volvo_vin %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

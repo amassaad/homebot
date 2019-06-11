@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Volvos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Vehicle</th>
+      <th>Position</th>
+      <th>Registration number</th>
+      <th>Vin</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @volvos.each do |volvo| %>
+      <tr>
+        <td><%= volvo.vehicle_id %></td>
+        <td><%= volvo.position %></td>
+        <td><%= volvo.registration_number %></td>
+        <td><%= volvo.vin %></td>
+        <td><%= link_to 'Show', volvo %></td>
+        <td><%= link_to 'Edit', edit_volvo_path(volvo) %></td>
+        <td><%= link_to 'Destroy', volvo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Volvo', new_volvo_path %>
