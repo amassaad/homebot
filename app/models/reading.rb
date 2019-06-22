@@ -78,6 +78,7 @@ class Reading < ApplicationRecord
                                                                                --ignore-certificate-errors
                                                                                --disable-popup-blocking
                                                                                --disable-translate
+                                                                               --profile-directory=Default
                                                                                --no-sandbox
                                                                                --disable-gpu
                                                                                --disable-default-apps
